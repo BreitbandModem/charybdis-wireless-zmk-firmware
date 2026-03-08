@@ -62,6 +62,17 @@
             flavor = "hold-preferred";
             bindings = <&mo>, <&mkp>;
         };
+        eu: tap_preferred_euro_mods {
+            compatible = "zmk,behavior-hold-tap";
+            // behavior-hold-tap must have two parameters even though we're only using the second
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <125>;
+            flavor = "tap-preferred";
+            // long press will run the euro macro
+            bindings = <&euro>, <&kp>;
+        };
         um: tap_preferred_umlaut_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -69,26 +80,28 @@
             quick-tap-ms = <200>;
             require-prior-idle-ms = <125>;
             flavor = "tap-preferred";
-            // long press will forward the key to the umlaut macro
+            // long press: umlaut with first param
+            // tap: keypress second param
             bindings = <&umlaut>, <&kp>;
-        };
-        umlaut_unshifted: umlaut_unshifted {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LA(U)>, <&kp LA(U)>;
-            // the mod-morph will prevent the shift modifier from being sent while sending the umlaut shortcut
-            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
     macros {
         umlaut: umlaut {
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
-            // use the mod-morph behavior to send the umlaut shortcut and then tap the given parameter key
             bindings =
-                <&umlaut_unshifted>,
-                <&macro_tap>,
+                <&macro_tap &kp K_CMENU>, // menu key is mapped to compose key
+                <&macro_tap &kp DQT>,
+                <&macro_tap>, // tap the key provided by params
                 <&macro_param_1to1 &kp MACRO_PLACEHOLDER>;
+        };
+        euro: euro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_tap &kp K_CMENU>,
+                <&macro_tap &kp C>,
+                <&macro_tap &kp EQUAL>;
         };
         mklc: mouse_click_layer_change {
             compatible = "zmk,behavior-macro";
@@ -105,11 +118,11 @@
                 default_layer {
                         bindings = <
 //,----------------------------------------------------------------------.            ,---------------------------------------------------------------------------------.
-    &kp TAB         &kp Q       &kp W   &tm LA(LS(N2)) E    &kp R   &kp T               &kp Y       &um U U        &kp I      &um O O           &kp P             &kp DEL
+    &kp TAB         &kp Q       &kp W   &eu E E    &kp R   &kp T               &kp Y       &um U U        &kp I      &um O O           &kp P             &kp DEL
 //|---------+-------------+-----------+------------+-------------+-------|            |------+-------------+------------+-----------+---------------+-------------------|
     &kp ESC   &tm LCTRL A   &tm LALT S  &tm LCMD D   &hm LSHFT F   &kp G               &kp H   &hm RSHFT J   &tm RCMD K   &tm RALT L  &tm RCTRL SEMI             &kp SQT
 //|---------+-------------+-----------+------------+-------------+-------|            |------+-------------+------------+-----------+---------------+-------------------|
-   &kp BSLH         &kp Z       &kp X        &kp C         &kp V   &kp B               &kp N       &kp M      &kp COMMA     &kp DOT        &kp FSLH   &kp LG(LC(SPACE))
+   &kp BSLH         &kp Z       &kp X        &kp C         &kp V   &kp B               &kp N       &kp M      &kp COMMA     &kp DOT        &kp FSLH   &kp LG(LC(E))
 //|---------+-------------+-----------+------------+-------------+-------+----|  |----+------+-------------+------------+-----------+---------------+-------------------|
                                           &mlt NAV LCLK  &mlt LOWER RCLK  &lt RAISE BSPC     &lt RAISE RET   &lt LOWER SPACE
                                        //`--------+-----------+---------------'  `---------------+----------------'
