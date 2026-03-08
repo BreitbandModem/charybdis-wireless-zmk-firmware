@@ -164,7 +164,11 @@ for shield in "${shields[@]}"; do
 
   for target in "${shield_targets[@]}"; do
     for keymap in "${keymaps[@]}"; do
-      board="nice_nano_v2"
+      if [[ "$target" == "charybdis_dongle" ]]; then
+        board="nrf52840dongle_nrf52840"
+      else
+        board="nice_nano_v2"
+      fi
       artifact_name="${target}-${keymap}-${board}-zmk"
       BUILD_DIR=$(mktemp -d)
       printf "🗂  %s\n" "→ Build dir: $BUILD_DIR"
@@ -182,6 +186,12 @@ for shield in "${shields[@]}"; do
         USB_LOGGING_SNIPPET="-S zmk-usb-logging"
       fi
 
+      # Force hex output for dongle
+      HEX_SNIPPET=""
+      if [[ "$board" == "nrf52840dongle_nrf52840" ]]; then
+        HEX_SNIPPET="-DCONFIG_BUILD_OUTPUT_HEX=y"
+      fi
+
       # Load in the keymap
       cp "$KEYMAP_TEMP/${keymap}.keymap" \
          "$BASE_DIR/$CONFIG_PATH/charybdis.keymap"
@@ -193,19 +203,28 @@ for shield in "${shields[@]}"; do
         $USB_LOGGING_SNIPPET \
         -- \
           -DZMK_CONFIG="$BASE_DIR/$CONFIG_PATH" \
+          $HEX_SNIPPET \
           -DSHIELD="$target" $ZMK_LOAD_ARG
       echo ""
       
-      # Find the built firmware (prefer .uf2, else fallback)
+      # Find the built firmware (prefer .uf2, else .hex, else fallback)
       ARTIFACT_SRC=""
       if [ -f "$BUILD_DIR/zephyr/zmk.uf2" ]; then
         ARTIFACT_SRC="$BUILD_DIR/zephyr/zmk.uf2"
         ARTIFACT_EXT="uf2"
+      elif [ -f "$BUILD_DIR/zephyr/zephyr.hex" ]; then
+        ARTIFACT_SRC="$BUILD_DIR/zephyr/zephyr.hex"
+        ARTIFACT_EXT="hex"
+      elif [ -f "$BUILD_DIR/zephyr/zmk.hex" ]; then
+        ARTIFACT_SRC="$BUILD_DIR/zephyr/zmk.hex"
+        ARTIFACT_EXT="hex"
       elif [ -f "$BUILD_DIR/zephyr/zmk.${FALLBACK_BINARY}" ]; then
         ARTIFACT_SRC="$BUILD_DIR/zephyr/zmk.${FALLBACK_BINARY}"
         ARTIFACT_EXT="$FALLBACK_BINARY"
       else
         echo "❌ No firmware artifact found for $artifact_name"
+        echo "Contents of $BUILD_DIR/zephyr:"
+        ls -F "$BUILD_DIR/zephyr"
         continue
       fi
 
