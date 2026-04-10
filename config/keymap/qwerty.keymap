@@ -173,7 +173,7 @@
                 nav_layer {
                         bindings = <
 //,--------------------------------------------------------------.            ,---------------------------------------------------------------.
-    &trans   &trans      &trans       &trans      &trans   &trans                &trans     &trans   &trans      &trans   &trans   &kp C_POWER
+   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans       &trans     &trans   &trans      &trans   &trans   &kp C_POWER
 //|--------+-----------+----------+----------+-----------+-------|            |---------+----------+--------+-----------+--------+------------|
     &trans   &kp LCTRL   &kp LALT   &kp LCMD   &kp LSHFT   &trans              &kp LEFT   &kp DOWN   &kp UP   &kp RIGHT   &trans   &trans
 //|--------+-----------+----------+----------+-----------+-------|            |---------+----------+--------+-----------+--------+------------|
