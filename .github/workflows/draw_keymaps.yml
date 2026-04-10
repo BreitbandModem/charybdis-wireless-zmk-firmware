@@ -3,6 +3,9 @@ run-name: Draw keymaps
 
 on:
   push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   draw_base_keymap:
@@ -11,7 +14,7 @@ jobs:
     permissions:
       contents: write
     with:
-      keymap_patterns: "config/keymap/qwerty.keymap"
+      keymap_patterns: "config/keymaps/qwerty.keymap"
       config_path:    "keymap-drawer/config.yaml"
       output_folder:  "keymap-drawer/base"
       json_path:      "config"
@@ -19,7 +22,7 @@ jobs:
       draw_args:      "qwerty:'-s Base --keys-only'"
       amend_commit:   false
       destination:    artifact
-      commit_message: "Add BASE-layer keymaps"
+      commit_message: "Add Base-layer keymaps"
       artifact_name: base-keymap
       fail_on_error:  true
       debug_mode:     false
@@ -30,7 +33,7 @@ jobs:
     permissions:
       contents: write
     with:
-      keymap_patterns: "config/keymap/qwerty.keymap"
+      keymap_patterns: "config/keymaps/qwerty.keymap"
       config_path:    "keymap-drawer/config.yaml"
       output_folder:  "keymap-drawer"
       json_path:      "config"
@@ -38,7 +41,7 @@ jobs:
       draw_args:      ""
       amend_commit:   false
       destination:    artifact
-      commit_message: "Add full keymaps"
+      commit_message: "Add all keymaps"
       artifact_name: full-keymaps
       fail_on_error:  true
       debug_mode:     false
@@ -51,18 +54,18 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           clean: false
 
       - name: Download base keymap artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: base-keymap
           path: keymap-drawer/base
 
       - name: Download full keymap artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: full-keymaps
           path: keymap-drawer
