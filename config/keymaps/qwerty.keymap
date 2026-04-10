@@ -79,6 +79,13 @@
             // tap: keypress second param
             bindings = <&umlaut>, <&kp>;
         };
+        tog_off: toggle_layer_off_only {
+            compatible = "zmk,behavior-layer-toggle";
+            #binding-cells = <1>;
+            display-name = "Toggle Layer Off";
+            toggle-mode = "off";
+            locking;
+        };
     };
     macros {
         umlaut: umlaut {
@@ -102,7 +109,7 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
-                <&macro_tap &tog MOUSE>,
+                <&macro_tap &tog_off MOUSE>,
                 <&macro_press &mkp LCLK>,
                 <&macro_pause_for_release>,
                 <&macro_release &mkp LCLK>;
@@ -150,7 +157,7 @@
 // ╰───────────┴────────┴────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┴────────┴────────┴───────────╯
                                    &mklc    &trans   &trans       &trans   &trans
 //                               ╰────────┴────────┴────────╯   ╰────────┴────────╯
-            >;
+            >; //                             ^ fix to switch to scroll mode
         };
 
         raise_layer {
