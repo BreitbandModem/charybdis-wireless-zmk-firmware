@@ -2,13 +2,12 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-#define MOUSE 2
-#define RAISE 3
-#define NAV   4
+#define RAISE 2
+#define NAV   3
 
 &trackball_listener {
     /* base processor chain on all layers */
-    input-processors = <&zip_xy_scaler 5 5>,<&zip_temp_layer MOUSE 1>;
+    input-processors = <&zip_xy_scaler 5 5>;
 
     /* layer-3 scroll override */
     scroller: scroller {

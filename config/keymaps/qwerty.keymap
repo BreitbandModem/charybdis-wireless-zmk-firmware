@@ -9,9 +9,8 @@
 
 #define DEFAULT 0
 #define LOWER   1
-#define MOUSE   2
-#define RAISE   3
-#define NAV     4
+#define RAISE   2
+#define NAV     3
 
 // todo: make dongle work.
 // https://github.com/zmkfirmware/zmk/tree/main/app/boards/shields/corne
@@ -98,14 +97,6 @@
                 <&macro_tap &kp C>,
                 <&macro_tap &kp EQUAL>;
         };
-        mhlh: mouse_hold_layer_hold {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press &mkp LCLK &mo NAV>,
-                <&macro_pause_for_release>,
-                <&macro_release &mkp LCLK &mo NAV>;
-        };
     };
     keymap {
         compatible = "zmk,keymap";
@@ -138,20 +129,6 @@
             >;
         };
 
-        mouse_layer {
-            bindings = <
-// ╭───────────┬────────┬────────┬────────┬────────┬────────╮   ╭────────┬────────┬────────┬────────┬────────┬───────────╮
-      &trans     &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans    &trans
-// ├───────────┼────────┼────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┼────────┼────────┼───────────┤
-      &trans     &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans    &trans
-// ├───────────┼────────┼────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┼────────┼────────┼───────────┤
-     &mkp MCLK   &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans   &mkp LCLK
-// ╰───────────┴────────┴────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┴────────┴────────┴───────────╯
-                                    &mhlh   &trans   &trans       &trans   &trans
-//                               ╰────────┴────────┴────────╯   ╰────────┴────────╯
-            >; //                             ^ fix to switch to scroll mode
-        };
-
         raise_layer {
             bindings = <
 // ╭─────────────┬───────────┬────────┬────────┬────────┬────────╮   ╭────────┬────────────────┬───────────────┬────────┬────────┬─────────────╮
@@ -171,7 +148,7 @@
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────┬────────╮   ╭──────────┬────────────┬──────────┬───────────┬────────┬─────────────╮
      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &trans        &trans      &trans      &trans     &trans     &trans   &kp C_POWER
 // ├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼────────┤   ├──────────┼────────────┼──────────┼───────────┼────────┼─────────────┤
-     &bt BT_CLR      &kp LCTRL       &kp LALT       &kp LCMD      &kp LSHFT     &trans       &kp LEFT    &kp DOWN     &kp UP    &kp RIGHT   &trans      &trans
+     &bt BT_CLR      &kp LCTRL       &kp LALT       &kp LCMD      &mkp LCLK     &trans       &kp LEFT    &kp DOWN     &kp UP    &kp RIGHT   &trans      &trans
 // ├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┼────────┤   ├──────────┼────────────┼──────────┼───────────┼────────┼─────────────┤
        &trans          &trans         &trans        &trans        &sys_reset    &trans        &trans    &sys_reset    &trans     &trans     &trans    &kp PSCRN
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┼────────┤   ├──────────┼────────────┼──────────┴───────────┴────────┴─────────────╯
