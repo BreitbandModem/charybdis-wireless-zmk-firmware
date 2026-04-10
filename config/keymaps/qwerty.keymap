@@ -98,17 +98,13 @@
                 <&macro_tap &kp C>,
                 <&macro_tap &kp EQUAL>;
         };
-        mhlt: mouse_hold_layer_tap {
-            compatible = "zmk,behavior-macro-two-param";
-            #binding-cells = <2>;
+        mhlh: mouse_hold_layer_hold {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
             bindings =
-                <&macro_param_1to1>,
-                <&macro_param_2to2>,
-                <&macro_press &to MACRO_PLACEHOLDER &mkp MACRO_PLACEHOLDER>,
+                <&macro_press &mkp LCLK &mo NAV>,
                 <&macro_pause_for_release>,
-                <&macro_param_1to1>,
-                <&macro_param_2to2>,
-                <&macro_release &tog MACRO_PLACEHOLDER &mkp MACRO_PLACEHOLDER>;
+                <&macro_release &mkp LCLK &mo NAV>;
         };
     };
     keymap {
@@ -151,7 +147,7 @@
 // ├───────────┼────────┼────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┼────────┼────────┼───────────┤
      &mkp MCLK   &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans   &mkp LCLK
 // ╰───────────┴────────┴────────┼────────┼────────┼────────┤   ├────────┼────────┼────────┴────────┴────────┴───────────╯
-                          &mhlt NAV LCLK    &trans   &trans       &trans   &trans
+                                    &mhlh   &trans   &trans       &trans   &trans
 //                               ╰────────┴────────┴────────╯   ╰────────┴────────╯
             >; //                             ^ fix to switch to scroll mode
         };
