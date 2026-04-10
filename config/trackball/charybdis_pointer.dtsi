@@ -23,6 +23,6 @@
     /* layer-4 slow-pointer override */
     slow_pointer: slow_pointer {
         layers           = <NAV>;
-        input-processors = <&zip_xy_scaler 2 6>;
+        input-processors = <&zip_xy_scaler 1 5>;
     };
 };
