@@ -2,32 +2,28 @@
 # Each entry under `include` becomes a single matrix item in CI and
 # the local build script.
 
-board: [ nice_nano//zmk ]
+board: [ nice_nano ]
 
 include:
 
 # ── Bluetooth (BT) Firmwares ─────────────────────────────────────────────────────────────
   - name: bt
-    board: nice_nano//zmk
+    board: nice_nano
     shield:
       - charybdis_left_bt
       - charybdis_right_bt
     keymap:
       - qwerty
-      - colemak_dh
-      - canary
 
 # ── Standard Dongle Firmwares ─────────────────────────────────────────────────
   - name: standard_dongle
-    board: nice_nano//zmk
+    board: nice_nano
     shield:
       - charybdis_left_dongle
       - charybdis_right_dongle
       - charybdis_dongle
     keymap:
       - qwerty
-      - colemak_dh
-      - canary
 
 # ── NiceNano Prospector Dongle with Touch (Waveshare 887) Screen Firmwares (not yet implemented) ────────────────────────
 # # Touch screen variant
@@ -55,5 +51,5 @@ include:
 
 # ── Reset Firmware ────────────────────────────────────────────────────────────
   - name: settings_reset
-    board: nice_nano//zmk
+    board: nice_nano
     shield: settings_reset
