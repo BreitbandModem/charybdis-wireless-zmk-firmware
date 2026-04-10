@@ -102,10 +102,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings =
+                <&macro_tap &tog MOUSE>,
                 <&macro_press &mkp LCLK>,
                 <&macro_pause_for_release>,
-                <&macro_release &mkp LCLK>,
-                <&macro_tap &tog MOUSE>;
+                <&macro_release &mkp LCLK>;
         };
     };
     keymap {
