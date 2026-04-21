@@ -2,8 +2,11 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
-#define RAISE 2
-#define NAV   3
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define NAV     3
+#define MOUSE   4
 
 &trackball_listener {
     /* base processor chain on all layers */
@@ -21,7 +24,7 @@
 
     /* layer-4 slow-pointer override */
     slow_pointer: slow_pointer {
-        layers           = <NAV>;
+        layers           = <MOUSE>;
         input-processors = <&zip_xy_scaler 1 5>;
     };
 };
