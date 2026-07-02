@@ -84,6 +84,24 @@
             bindings = <&kp PLUS>, <&kp EQUAL>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+        par: paranthesis {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR>, <&kp RPAR>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        brc: curly_braces {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LBRC>, <&kp RBRC>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        brk: brackets {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LBKT>, <&kp RBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
     };
     macros {
         umlaut: umlaut {
@@ -128,9 +146,9 @@
 // ├───────┼──────────────┼─────────────┼─────────────┼──────────────┼───────────┤   ├───────────┼──────────────┼─────────────┼─────────────┼──────────────┼───────┤
      &none   &tm LCTRL N1   &tm LALT N2   &tm LCMD N3   &hm LSHFT N4     &kp N5         &kp N6     &hm RSHFT N7   &tm RCMD N8   &tm RALT N9   &tm RCTRL N0   &none
 // ├───────┼──────────────┼─────────────┼─────────────┼──────────────┼───────────┤   ├───────────┼──────────────┼─────────────┼─────────────┼──────────────┼───────┤
-     &none      &trans        &trans        &trans         &trans       &trans          &trans        &trans        &trans        &kp BSLH         &trans      &none
+     &none      &trans        &trans        &trans         &trans       &trans          &trans        &trans        &trans        &trans        &kp BSLH      &none
 // ╰───────┴──────────────┴─────────────┼─────────────┼──────────────┼───────────┤   ├───────────┼──────────────┼─────────────┴─────────────┴──────────────┴───────╯
-                                            &kp TAB       &kp ESC      &kp BSPC        &kp RET      &kp SPACE
+                                            &brk            &par         &brc           &kp SQT      &kp GRAVE
 //                                      ╰─────────────┴──────────────┴───────────╯   ╰───────────┴──────────────╯
             >;
         };
